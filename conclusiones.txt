@@ -13,8 +13,3 @@ Conclusiones generales del reto
 - Las cifras del análisis de performance provienen del PDF proporcionado y
   distinguen datos exactos, cálculos y estimaciones visuales.
 
-Pendientes externos al repositorio
-----------------------------------
-- Completar el formulario teórico del reto.
-- Publicar el repositorio en GitHub con visibilidad pública.
-- Responder el correo de entrega con el enlace público.
