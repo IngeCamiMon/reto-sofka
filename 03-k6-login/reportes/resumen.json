@@ -1,0 +1,67 @@
+{
+  "generatedAt": "2026-10-07T18:34:32.014Z",
+  "endpoint": "POST https://fakestoreapi.com/auth/login",
+  "k6Scenario": {
+    "executor": "constant-arrival-rate",
+    "targetIterationsPerSecond": 20,
+    "durationSeconds": 30,
+    "preAllocatedVUs": 40,
+    "maxVUs": 80
+  },
+  "results": {
+    "httpRequests": 601,
+    "completedIterations": 601,
+    "k6HttpRequestRateIncludingResponseDrain": 19.75479402997634,
+    "configuredArrivalRateIterationsPerSecond": 20,
+    "httpFailedRate": 0,
+    "httpDurationP95Ms": 497.9534,
+    "httpDurationMaxMs": 903.6471,
+    "checksPassed": 1803,
+    "checksFailed": 0,
+    "acceptedLoginResponses": 601,
+    "responsesWithToken": 601,
+    "failedLoginIterationRate": 0,
+    "droppedIterations": 0,
+    "testDurationMs": 30422.995
+  },
+  "thresholdChecks": {
+    "executorScheduled20IterationsPerSecond": true,
+    "p95Below1500Ms": true,
+    "everyResponseAtMost1500Ms": true,
+    "httpFailureRateBelow3Percent": true,
+    "allChecksPassed": true,
+    "noDroppedIterations": true
+  },
+  "thresholds": {
+    "http_req_duration": {
+      "p(95)<1500": {
+        "ok": true
+      }
+    },
+    "http_req_failed": {
+      "rate<0.03": {
+        "ok": true
+      }
+    },
+    "iterations": {
+      "count>=600": {
+        "ok": true
+      }
+    },
+    "dropped_iterations": {
+      "count==0": {
+        "ok": true
+      }
+    },
+    "checks": {
+      "rate==1": {
+        "ok": true
+      }
+    },
+    "login_failure_rate": {
+      "rate<0.03": {
+        "ok": true
+      }
+    }
+  }
+}

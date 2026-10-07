@@ -1,0 +1,47 @@
+Hallazgos de la ejecucion E2E
+=============================
+
+Fecha: 7 de octubre de 2026
+Sitio: http://opencart.abstracta.us/
+Comando: mvn clean verify
+Resultado final: BUILD SUCCESS en las dos ejecuciones finales (normal y headless)
+
+Resultado observado
+-------------------
+- Chrome normal: 1 escenario/caso aprobado, 0 fallidos, 0 errores; 27.77
+  segundos de prueba (Surefire) y 1 minuto y 1 segundo para el build completo.
+- Chrome headless: 1 escenario/caso aprobado, 0 fallidos, 0 errores; 37.97
+  segundos de prueba (Surefire) y 1 minuto y 8 segundos para el build completo.
+- El flujo añadió HTC Touch HD y iPhone, verificó sus nombres en el carrito,
+  completó Guest Checkout y validó exactamente "Your order has been placed!".
+  Al ejecutar en ambos modos se colocaron dos pedidos de prueba en el sitio demo.
+- Se completaron dos ejecuciones exitosas, una con interfaz y otra headless.
+  Ambas aprobaron, aunque dos ejecuciones no constituyen una medición
+  estadística de estabilidad a largo plazo.
+
+Hallazgos y ajustes del sitio
+-----------------------------
+- El catálogo muestra MacBook como agotado. Se usaron iPhone y HTC Touch HD,
+  ambos disponibles y sin opciones obligatorias al momento de la prueba.
+- El checkout carga los estados de Estados Unidos de forma dinámica. En la
+  página examinada, New York corresponde al ID 3655; el ID 349 configurado
+  inicialmente no está presente en este despliegue.
+- Una superposición fija de Bitnami interceptaba el botón Continue. Se cerró
+  mediante el control de cierre visible de la propia página antes de continuar.
+- El método predeterminado es Bank Transfer. El escenario selecciona Cash On
+  Delivery y espera a que Confirm Order esté habilitado antes de enviar el
+  pedido; así evita competir con la carga asíncrona del checkout.
+- Selenium 4.46.0 emitió un aviso de que Chrome 153 no tiene versión CDP exacta
+  y usó la versión cercana 150. No impidió la ejecución: ChromeDriver 153.0.8010.52
+  ejecutó ambas pruebas y las aserciones finales pasaron.
+- En la validacion limpia del 7 de octubre de 2026, `mvn clean verify`
+  volvio a completar con BUILD SUCCESS: 1 prueba aprobada, 0 fallidas y 0
+  errores. La prueba tomo 39.24 segundos y el build 1 minuto 17 segundos; el
+  reporte generado se copio a `reporte/`.
+- La compilación avisa que CucumberWithSerenity está obsoleto y marcado para
+  eliminación futura. El runner JUnit 4.13.2 funciona con las versiones fijadas,
+  pero conviene migrarlo a la integración JUnit Platform en una actualización
+  futura de Serenity.
+
+No se midió el tiempo de respuesta individual del sitio como prueba de
+rendimiento; los tiempos anteriores corresponden a la automatización local.

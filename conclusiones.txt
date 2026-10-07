@@ -1,0 +1,20 @@
+Conclusiones generales del reto
+===============================
+
+- El repositorio contiene cuatro entregables: automatización E2E con Serenity,
+  pruebas CRUD con Karate, carga con K6 e informe de resultados de performance.
+- Las conclusiones específicas, resultados observados y limitaciones están
+  documentados en el archivo conclusiones.txt de cada módulo.
+- Los reportes incluidos son evidencia de ejecuciones anteriores; los
+  comandos descritos en cada README permiten regenerar resultados.
+- Los escenarios contra OpenCart, PetStore y FakeStore dependen de servicios
+  públicos externos. Sus respuestas y disponibilidad pueden cambiar, por lo
+  que una ejecución futura podría diferir.
+- Las cifras del análisis de performance provienen del PDF proporcionado y
+  distinguen datos exactos, cálculos y estimaciones visuales.
+
+Pendientes externos al repositorio
+----------------------------------
+- Completar el formulario teórico del reto.
+- Publicar el repositorio en GitHub con visibilidad pública.
+- Responder el correo de entrega con el enlace público.

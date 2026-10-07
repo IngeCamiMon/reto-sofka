@@ -1,0 +1,22 @@
+Conclusiones del análisis de performance
+========================================
+
+- El PDF fuente reporta 276.650 solicitudes y 6.759 fallidas (2,44 %), por
+  debajo del umbral estricto de 3 %.
+- El p95 global de http_req_duration es 1,57 s, 70 ms por encima del límite
+  de 1,5 s. El p95 de 1,42 s aplica solo a respuestas esperadas y no reemplaza
+  la métrica global.
+- De los fallos, 5.990 son HTTP 5xx y 769 son HTTP 4xx; los 5xx representan
+  la mayor parte y se concentran en la etapa 1 según el resumen.
+- El throughput promedio reportado es 73,18 solicitudes/s. La gráfica sugiere
+  un pico visual aproximado de 95–100 solicitudes/s con hasta 140 VUs, pero no
+  publica un máximo exacto.
+- La caída aproximada entre 01:50 y 02:00 coincide con una carga alta de VUs y
+  luego se observa recuperación. Esa coincidencia temporal no identifica por
+  sí sola una causa raíz.
+- El máximo de http_req_duration es 29,93 s, compatible con un timeout cercano
+  a 30 s, pero el PDF no permite confirmar que esa sea la causa.
+
+El informe distingue las mediciones transcritas de las estimaciones visuales y
+explicita los límites de inferencia; no se dispone del archivo de datos crudos
+ni del script original de la prueba.

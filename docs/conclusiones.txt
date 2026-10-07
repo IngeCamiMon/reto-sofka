@@ -1,0 +1,7 @@
+Documentos de referencia
+========================
+
+Los tres PDFs de esta carpeta son material fuente del reto, no resultados de
+ejecución. Sus requisitos se implementan o analizan en los módulos numerados.
+El análisis de métricas y la gráfica del ejercicio de performance se entrega
+en 04-informe-resultados/InformeResultados.docx y .doc.

@@ -1,0 +1,34 @@
+# Java / Maven
+*.class
+*.jar
+*.war
+*.ear
+target/
+.mvn/timing.properties
+
+# Gradle (por si se utiliza en herramientas Java)
+.gradle/
+build/
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+dist/
+coverage/
+
+# K6 y resultados temporales
+*.log
+
+# Entornos locales y secretos
+.env
+.env.*
+!.env.example
+
+# IDEs y sistema operativo
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+desktop.ini

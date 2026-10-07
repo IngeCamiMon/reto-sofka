@@ -1,0 +1,50 @@
+Conclusiones de la ejecucion
+============================
+
+Fecha: 7 de octubre de 2026
+API: https://petstore.swagger.io/v2
+Comando: mvn clean test
+Karate: 1.4.1
+Resultado: BUILD SUCCESS
+
+Resultado observado
+-------------------
+- Surefire detecto y ejecuto 1 prueba JUnit 5: 1 aprobada, 0 fallidas, 0
+  errores y 0 omitidas.
+- Karate ejecuto 1 escenario y aprobo sus seis solicitudes/assertions CRUD.
+- En la ultima validacion limpia, la duracion del escenario medida por Karate
+  fue 4.302 segundos.
+- Tiempo de prueba reportado por Surefire en esa validacion: 14.36 segundos, incluyendo el
+  arranque del runner.
+- El reporte Karate registro un tiempo total de 10.420 segundos para la
+  ejecucion y generacion de resultados.
+- POST, GET inicial, PUT, GET actualizado y DELETE respondieron HTTP 200.
+  El GET posterior a DELETE respondio HTTP 404 con
+  `{"code":1,"type":"error","message":"User not found"}`.
+- La API asigno al usuario un ID numerico propio en lugar de conservar un ID
+  enviado por el cliente. El flujo actualizado captura ese ID del GET y lo
+  reutiliza en el PUT.
+- El nombre y el correo se actualizaron correctamente, y el GET de
+  comprobacion devolvio ambos valores actualizados.
+- No se activaron reintentos en esta ejecucion: todas las lecturas requeridas
+  respondieron con el estado y datos esperados al primer intento.
+
+Observaciones de ejecucion
+--------------------------
+- Una ejecucion inicial de `mvn clean test` habia terminado en BUILD SUCCESS
+  sin descubrir el runner porque su nombre no cumplia el patron de Surefire.
+  Se corrigio el nombre a `PetStoreRunnerTest`; la ejecucion final confirmo
+  explicitamente 1 prueba descubierta y aprobada.
+- El API genera IDs de 19 digitos, fuera del rango entero seguro de JavaScript.
+  La comparacion numerica directa perdia precision. El flujo conserva el ID
+  exacto del POST como texto y utiliza `BigInteger` en el cuerpo PUT; asi
+  preserva el valor y comprueba que el POST y PUT informan el mismo ID.
+- Una corrida de prueba que detecto esa precision dejo un usuario de prueba.
+  Fue eliminado manualmente por su username exacto antes de repetir el flujo
+  final, que tambien verifico la eliminacion de su propio usuario.
+- La API publica respondio correctamente durante la ejecucion final. La prueba
+  configura hasta cinco reintentos espaciados por un segundo unicamente en
+  lecturas, para tolerar demoras o consistencia eventual sin repetir POST,
+  PUT ni DELETE.
+- Los tiempos observados son de esta unica ejecucion y no constituyen una
+  medicion estadistica de rendimiento o disponibilidad del servicio.

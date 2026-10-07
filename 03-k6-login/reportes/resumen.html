@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>K6 login load test summary</title>
+  <style>
+    body{font:16px system-ui,sans-serif;max-width:900px;margin:2rem auto;padding:0 1rem;color:#20242a}
+    table{border-collapse:collapse;width:100%}th,td{border:1px solid #d8dde3;padding:.65rem;text-align:left}
+    th{background:#f2f5f8}.pass{color:#137333}.raw{white-space:pre-wrap;overflow-wrap:anywhere;background:#f6f8fa;padding:1rem}
+  </style>
+</head>
+<body>
+  <h1>K6 login load test</h1>
+  <p>POST https://fakestoreapi.com/auth/login</p>
+  <p>Target arrival rate: 20 iterations/s for 30 seconds. Each iteration sends one login request.</p>
+  <table>
+    <thead><tr><th>Metric</th><th>Observed</th><th>Target</th></tr></thead>
+    <tbody>
+      <tr><td>HTTP requests</td><td>601</td><td>600 scheduled</td></tr>
+      <tr><td>Configured arrival rate</td><td>20.00 iterations/s</td><td>20 iterations/s for the full 30 s load window</td></tr>
+      <tr><td>Completed iterations / HTTP requests</td><td>601 / 601</td><td>600 scheduled; zero dropped</td></tr>
+      <tr><td>K6 HTTP response completion rate</td><td>19.75 req/s</td><td>Informational; includes response drain after arrival window</td></tr>
+      <tr><td>HTTP request failure rate</td><td>0.00%</td><td>&lt; 3%</td></tr>
+      <tr><td>Response duration p95</td><td>497.95 ms</td><td>&lt; 1500 ms</td></tr>
+      <tr><td>Maximum response duration</td><td>903.65 ms</td><td>&le; 1500 ms for every request</td></tr>
+      <tr><td>Checks</td><td>1803 passed / 0 failed</td><td>All pass</td></tr>
+      <tr><td>Dropped iterations</td><td>0</td><td>0</td></tr>
+    </tbody>
+  </table>
+  <h2>Acceptance checks</h2>
+  <ul><li class="pass">executorScheduled20IterationsPerSecond: PASS</li><li class="pass">p95Below1500Ms: PASS</li><li class="pass">everyResponseAtMost1500Ms: PASS</li><li class="pass">httpFailureRateBelow3Percent: PASS</li><li class="pass">allChecksPassed: PASS</li><li class="pass">noDroppedIterations: PASS</li></ul>
+  <h2>Raw K6 summary</h2>
+  <pre class="raw">{
+  "generatedAt": "2026-10-07T18:34:32.014Z",
+  "endpoint": "POST https://fakestoreapi.com/auth/login",
+  "k6Scenario": {
+    "executor": "constant-arrival-rate",
+    "targetIterationsPerSecond": 20,
+    "durationSeconds": 30,
+    "preAllocatedVUs": 40,
+    "maxVUs": 80
+  },
+  "results": {
+    "httpRequests": 601,
+    "completedIterations": 601,
+    "k6HttpRequestRateIncludingResponseDrain": 19.75479402997634,
+    "configuredArrivalRateIterationsPerSecond": 20,
+    "httpFailedRate": 0,
+    "httpDurationP95Ms": 497.9534,
+    "httpDurationMaxMs": 903.6471,
+    "checksPassed": 1803,
+    "checksFailed": 0,
+    "acceptedLoginResponses": 601,
+    "responsesWithToken": 601,
+    "failedLoginIterationRate": 0,
+    "droppedIterations": 0,
+    "testDurationMs": 30422.995
+  },
+  "thresholdChecks": {
+    "executorScheduled20IterationsPerSecond": true,
+    "p95Below1500Ms": true,
+    "everyResponseAtMost1500Ms": true,
+    "httpFailureRateBelow3Percent": true,
+    "allChecksPassed": true,
+    "noDroppedIterations": true
+  },
+  "thresholds": {
+    "http_req_duration": {
+      "p(95)&lt;1500": {
+        "ok": true
+      }
+    },
+    "http_req_failed": {
+      "rate&lt;0.03": {
+        "ok": true
+      }
+    },
+    "iterations": {
+      "count&gt;=600": {
+        "ok": true
+      }
+    },
+    "dropped_iterations": {
+      "count==0": {
+        "ok": true
+      }
+    },
+    "checks": {
+      "rate==1": {
+        "ok": true
+      }
+    },
+    "login_failure_rate": {
+      "rate&lt;0.03": {
+        "ok": true
+      }
+    }
+  }
+}</pre>
+</body>
+</html>

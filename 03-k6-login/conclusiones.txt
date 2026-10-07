@@ -1,0 +1,44 @@
+Conclusiones de la prueba de carga
+==================================
+
+Fecha: 7 de octubre de 2026
+Endpoint: POST https://fakestoreapi.com/auth/login
+Herramienta: K6 v1.2.3
+Comando: k6 run login.js
+Resultado: ejecucion completada; todos los thresholds pasaron.
+
+Resumen medido
+--------------
+- Escenario `constant-arrival-rate`: 20 iteraciones/s durante 30 segundos,
+  mostrado sostenidamente por K6 durante toda la ventana de carga.
+- 601 iteraciones y solicitudes HTTP completadas frente a 600 iteraciones
+  nominales; cero iteraciones descartadas. Cada iteracion ejecuta exactamente
+  un POST. El conteo incluye la iteracion que completo en el borde/drenaje final,
+  por lo que no se interpreta 601/30 como tasa de llegada sostenida.
+- Throughput nativo `http_reqs` de K6: 19.75 solicitudes/s, calculado sobre
+  la duracion total de la metrica, que incluye la finalizacion de las
+  respuestas en curso. No es la misma ventana que el arrival rate del
+  executor; K6 mantuvo el ritmo programado de 20.00 iteraciones/s.
+- Percentil 95 de duracion HTTP: 497.95 ms, inferior a 1,500 ms.
+- Maximo de duracion HTTP: 903.65 ms; todas las respuestas cumplieron el check
+  individual de maximo 1,500 ms.
+- Errores HTTP: 0 (0 %), menor al 3 % permitido.
+- Checks: 1,803 aprobados, 0 fallidos. Los 601 logins devolvieron un status
+  aceptado (200/201) y
+  una respuesta con token no vacio.
+- Iteraciones fallidas: 0 %. Iteraciones descartadas: 0.
+- Todos los thresholds K6 (`p(95)<1500`, `http_req_failed rate<0.03`,
+  al menos 600 iteraciones, `dropped_iterations count==0`, `checks rate==1`
+  y `login_failure_rate rate<0.03`) pasaron.
+
+Comportamiento del servicio
+---------------------------
+- No se observo limitacion de tasa, error ni necesidad de reintentos durante la
+  corrida de carga.
+- El API atendio esta carga de 20 TPS durante 30 segundos con p95 y maximo por
+  debajo del objetivo. Esta prueba puntual no demuestra capacidad sostenida a
+  largo plazo ni escalabilidad por encima de la carga aplicada.
+
+Archivos generados:
+- `reportes/resumen.json`: metricas, configuracion y resultados de thresholds.
+- `reportes/resumen.html`: resumen legible de la ejecucion.
